@@ -3,6 +3,7 @@ package repository
 import (
 	"database/sql"
 	"fmt"
+
 	"github.com/DeepanshuMishraa/gotodo/internals/models"
 )
 
@@ -95,7 +96,6 @@ func (r *TodoRepository) GetAllByUserID(userID int) ([]*models.Todo, error) {
 	return todos, nil
 }
 
-
 func (r *TodoRepository) Delete(id int) error {
 	query := `DELETE FROM todos WHERE id = $1`
 
@@ -114,4 +114,33 @@ func (r *TodoRepository) Delete(id int) error {
 	}
 
 	return nil
+}
+
+func (r *TodoRepository) Update(id int, title *string, description *string, isCompleted *bool) (*models.Todo, error) {
+	query := `
+		UPDATE todos
+		SET title = $1, description = $2, completed = $3, updated_at = NOW()
+		WHERE id = $4
+		RETURNING id, user_id, title, description, completed, created_at, updated_at
+	`
+
+	todo := &models.Todo{}
+	err := r.db.QueryRow(query, title, description, isCompleted, id).Scan(
+		&todo.Id,
+		&todo.UserId,
+		&todo.Title,
+		&todo.Description,
+		&todo.IsCompleted,
+		&todo.CreatedAt,
+		&todo.UpdatedAt,
+	)
+
+	if err == sql.ErrNoRows {
+		return nil, fmt.Errorf("todo not found")
+	}
+	if err != nil {
+		return nil, fmt.Errorf("failed to update todo: %w", err)
+	}
+
+	return todo, nil
 }
