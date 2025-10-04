@@ -22,10 +22,10 @@ func NewAuthHandler(userRepo *repository.UserRepository, jwtManager *auth.JWTMan
 }
 
 func (h *AuthHandler) Register(c *fiber.Ctx) error {
-	var req *models.UserRegisterRequest
+	var req models.UserRegisterRequest
 
-	if err := c.BodyParser(req); err != nil {
-		return RespondWithError(c, fiber.StatusBadRequest, "Invaild Request Body")
+	if err := c.BodyParser(&req); err != nil {
+		return RespondWithError(c, fiber.StatusBadRequest, err.Error())
 	}
 
 	if req.Email == "" || req.Password == "" {
@@ -73,14 +73,13 @@ func (h *AuthHandler) Register(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusCreated).JSON(response)
 }
 
-
 func (h *AuthHandler) Login(c *fiber.Ctx) error {
 
 	var req models.UserLoginRequest
 	if err := c.BodyParser(&req); err != nil {
 		return RespondWithError(c, fiber.StatusBadRequest, "invalid request body")
 	}
-	
+
 	if req.Email == "" || req.Password == "" {
 		return RespondWithError(c, fiber.StatusBadRequest, "email and password are required")
 	}
