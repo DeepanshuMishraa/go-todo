@@ -1,0 +1,31 @@
+pipeline{
+    agent any 
+    
+    stages{
+        stage("Clone"){
+            steps {
+                echo "This is cloning the code"
+                git url: "https://github.com/DeepanshuMishraa/go-todo.git", branch:"master"
+                echo "Cloning Successfull ✅"
+            }
+        }
+        stage("build"){
+            steps{
+                sh "docker build -t go-server:latest . "
+            }
+        }
+        
+        stage("Test"){
+            steps{
+                echo "This is testing the code."
+            }
+        }
+        
+        stage("deploy"){
+            steps{
+               sh "docker run -d -p 3000:3000 go-server:latest"
+               echo "Deploy Success"
+            }
+        }
+    }
+}
