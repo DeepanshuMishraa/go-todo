@@ -18,6 +18,6 @@ WORKDIR /app
 COPY --from=builder /app/main .
 COPY --from=builder /app/migrations ./migrations
 
-EXPOSE 8080
+EXPOSE 3000
 
 ENTRYPOINT ["./main"]
