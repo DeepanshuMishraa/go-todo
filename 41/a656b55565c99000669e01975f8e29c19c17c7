@@ -1,0 +1,31 @@
+docker-compose.yml
+  s_f819e6590ad385::t_17f47e8986f8e2 28
+  s_f819e6590ad385::t_cb9dd3872268bd 16
+  s_f819e6590ad385::t_724fa49c1d0f4e 13-15,17-22
+Dockerfile
+  s_a862a242e203c0::t_acbb1c71877bb8 1-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "41a656b55565c99000669e01975f8e29c19c17c7",
+  "prompts": {},
+  "sessions": {
+    "s_a862a242e203c0": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_14474e354ffeg6HIvaFiPPktb8",
+        "model": "deepseek-v4-flash-free"
+      },
+      "human_author": "Deepanshu Mishra <d4deepanshu723@gmail.com>"
+    },
+    "s_f819e6590ad385": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_147e7ea04ffeaWySuSC0UgTOu5",
+        "model": "deepseek-v4-flash-free"
+      },
+      "human_author": "Deepanshu Mishra <d4deepanshu723@gmail.com>"
+    }
+  }
+}
