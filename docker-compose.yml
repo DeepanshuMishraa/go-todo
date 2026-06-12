@@ -1,0 +1,28 @@
+version: "5.1.4"
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "admin"
+    ports:
+      - "5432:5432"
+    networks:
+      - two-tier
+  go:
+    build:
+      context: .
+    container_name: go-server
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      JWT_SECRET: hello
+      DATABASE_URL: postgresql://postgres:admin@localhost:5432/postgres
+    networks:
+      - two-tier
+
+    depends_on:
+      - postgres
+networks:
+  two-tier:
